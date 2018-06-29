@@ -1,4 +1,4 @@
-[![Build Status][ci-img]][ci] [![Released Version][maven-img]][maven]
+[![Build Status][ci-img]][ci] [![Coverage Status][cov-img]][cov] [![Released Version][maven-img]][maven]
 
 # OpenTracing Scala Akka instrumentation
 OpenTracing instrumentation for Scala Akka.
@@ -73,5 +73,7 @@ val future = ask(myActorRef, TracedMessage.wrap(span, "hello"), timeout);
 
 [ci-img]: https://travis-ci.org/opentracing-contrib/scala-akka.svg?branch=master
 [ci]: https://travis-ci.org/opentracing-contrib/scala-akka
+[cov-img]: https://coveralls.io/repos/github/opentracing-contrib/scala-akka/badge.svg?branch=master
+[cov]: https://coveralls.io/github/opentracing-contrib/scala-akka?branch=master
 [maven-img]: https://img.shields.io/maven-central/v/io.opentracing.contrib/opentracing-scala-akka.svg
 [maven]: http://search.maven.org/#search%7Cga%7C1%7Copentracing-scala-akka
