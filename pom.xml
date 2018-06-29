@@ -224,6 +224,9 @@
         <groupId>org.eluder.coveralls</groupId>
         <artifactId>coveralls-maven-plugin</artifactId>
         <version>${coveralls-maven-plugin.version}</version>
+        <configuration>
+          <sourceDirectories>src/main/scala</sourceDirectories>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
