@@ -71,6 +71,10 @@ val span = tracer.buildSpan("foo").start()
 val future = ask(myActorRef, TracedMessage.wrap(span, "hello"), timeout);
 ```
 
+## License
+
+[Apache 2.0 License](./LICENSE).
+
 [ci-img]: https://travis-ci.org/opentracing-contrib/scala-akka.svg?branch=master
 [ci]: https://travis-ci.org/opentracing-contrib/scala-akka
 [cov-img]: https://coveralls.io/repos/github/opentracing-contrib/scala-akka/badge.svg?branch=master
