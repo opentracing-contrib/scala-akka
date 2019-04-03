@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The OpenTracing Authors
+ * Copyright 2018-2019 The OpenTracing Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
@@ -19,8 +19,8 @@ class SpanCheckActor extends TracedAbstractActor {
 
   override def receive: Receive = {
     case x: Any =>
-      val scope = tracer().scopeManager.active
-      val isSameSpan = scope != null && scope.span == x
+      val span = tracer().scopeManager.activeSpan
+      val isSameSpan = span != null && span == x
       sender().tell(isSameSpan, self)
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The OpenTracing Authors
+ * Copyright 2018-2019 The OpenTracing Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
@@ -14,12 +14,11 @@
 package io.opentracing.contrib.akka
 
 import io.opentracing.mock.MockTracer
-import io.opentracing.mock.MockTracer.Propagator
-import io.opentracing.util.{AutoFinishScopeManager, GlobalTracer, GlobalTracerTestUtil}
+import io.opentracing.util.{GlobalTracer, GlobalTracerTestUtil}
 import org.scalatest.{BeforeAndAfter, FunSuite}
 
 class TracedMessageTest extends FunSuite with BeforeAndAfter {
-  val mockTracer = new MockTracer(new AutoFinishScopeManager, Propagator.TEXT_MAP)
+  val mockTracer = new MockTracer()
 
   before {
     mockTracer.reset()
@@ -48,13 +47,13 @@ class TracedMessageTest extends FunSuite with BeforeAndAfter {
   }
 
   test("testImplicitActiveSpan") {
-    GlobalTracer.register(mockTracer)
+    GlobalTracer.registerIfAbsent(mockTracer)
 
     val originalMessage = "foo"
     var message: Any = null
     val span = mockTracer.buildSpan("one").start
 
-    val scope = mockTracer.scopeManager.activate(span, false)
+    val scope = mockTracer.scopeManager.activate(span)
     message = TracedMessage.wrap(originalMessage)
     scope.close()
 

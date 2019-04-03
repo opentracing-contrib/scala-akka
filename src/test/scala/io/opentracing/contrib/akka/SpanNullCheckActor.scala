@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The OpenTracing Authors
+ * Copyright 2018-2019 The OpenTracing Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
@@ -19,7 +19,7 @@ class SpanNullCheckActor extends TracedAbstractActor {
 
   override def receive: Receive = {
     case _: Any =>
-      sender().tell(tracer().scopeManager.active == null, self)
+      sender().tell(tracer().scopeManager.activeSpan == null, self)
   }
 }
 

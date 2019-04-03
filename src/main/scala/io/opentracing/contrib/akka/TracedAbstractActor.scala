@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The OpenTracing Authors
+ * Copyright 2018-2019 The OpenTracing Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
@@ -15,11 +15,12 @@ package io.opentracing.contrib.akka
 
 import akka.AroundReceiveActor
 import akka.actor.Actor
-import io.opentracing.Tracer
 import io.opentracing.util.GlobalTracer
+import io.opentracing.{Scope, Tracer}
 
 
 trait TracedAbstractActor extends Actor with AroundReceiveActor {
+  var activeScope: Scope = _
 
   override protected def traceBeforeReceive(receive: Receive, msg: Any): Unit = {
     if (!msg.isInstanceOf[TracedMessage[_]]) {
@@ -28,13 +29,14 @@ trait TracedAbstractActor extends Actor with AroundReceiveActor {
     }
 
     val tracedMessage = msg.asInstanceOf[TracedMessage[_]]
-    tracer().scopeManager.activate(tracedMessage.activeSpan, false)
+    activeScope = tracer().scopeManager.activate(tracedMessage.activeSpan)
     superAroundReceive(receive, tracedMessage.message)
   }
 
   override protected def traceAfterReceive(receive: Receive, msg: Any): Unit = {
-    if (tracer().scopeManager().active() != null) {
-      GlobalTracer.get().scopeManager().active().close()
+    if (activeScope != null) {
+      activeScope.close()
+      activeScope = null
     }
   }
 

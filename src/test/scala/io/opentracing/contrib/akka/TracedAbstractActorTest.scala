@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 The OpenTracing Authors
+ * Copyright 2018-2019 The OpenTracing Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
@@ -31,7 +31,7 @@ class TracedAbstractActorTest extends FunSuite with BeforeAndAfter {
 
   before {
     mockTracer.reset()
-    GlobalTracer.register(mockTracer)
+    GlobalTracer.registerIfAbsent(mockTracer)
     system = ActorSystem.create("testSystem")
   }
 
@@ -53,10 +53,12 @@ class TracedAbstractActorTest extends FunSuite with BeforeAndAfter {
     val actorRef = system.actorOf(SpanCheckActor.props, "actorOne")
     val timeout = new Timeout(getDefaultDuration)
 
-    val scope = mockTracer.buildSpan("one").startActive(true)
-    val message = TracedMessage.wrap(scope.span /* message */)
+    val span = mockTracer.buildSpan("one").start()
+    val scope = mockTracer.activateSpan(span)
+    val message = TracedMessage.wrap(span /* message */)
     val future = ask(actorRef, message, timeout)
     scope.close()
+    span.finish()
 
     val isSpanSame = Await.result(future, getDefaultDuration)
     assert(isSpanSame === true)
@@ -66,9 +68,11 @@ class TracedAbstractActorTest extends FunSuite with BeforeAndAfter {
     val actorRef = system.actorOf(SpanCheckActor.props, "actorOne")
     val timeout = new Timeout(getDefaultDuration)
 
-    val scope = mockTracer.buildSpan("one").startActive(true)
-    val future = ask(actorRef, scope.span, timeout)
+    val span = mockTracer.buildSpan("one").start()
+    val scope = mockTracer.activateSpan(span)
+    val future = ask(actorRef, span, timeout)
     scope.close()
+    span.finish()
 
     val isSpanSame = Await.result(future, getDefaultDuration)
     assert(isSpanSame === false)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright 2018 The OpenTracing Authors
+    Copyright 2018-2019 The OpenTracing Authors
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
     in compliance with the License. You may obtain a copy of the License at
@@ -14,16 +14,18 @@
     the License.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.opentracing.contrib</groupId>
   <artifactId>opentracing-scala-akka</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
+  <version>0.1.0-SNAPSHOT</version>
 
   <name>${project.groupId}:${project.artifactId}</name>
   <description>OpenTracing Instrumentation for Scala Akka</description>
   <url>https://github.com/opentracing-contrib/scala-akka</url>
-  <inceptionYear>2018</inceptionYear>
+  <inceptionYear>2018-2019</inceptionYear>
 
   <scm>
     <url>http://github.com/opentracing-contrib/scala-akka</url>
@@ -59,11 +61,11 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
 
-    <scala.version>2.12.4</scala.version>
-    <akka.version>2.5.9</akka.version>
-    <opentracing.version>0.31.0</opentracing.version>
+    <scala.version>2.12.8</scala.version>
+    <akka.version>2.5.21</akka.version>
+    <opentracing.version>0.32.0</opentracing.version>
     <coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
-    <jacoco-maven-plugin.version>0.8.1</jacoco-maven-plugin.version>
+    <jacoco-maven-plugin.version>0.8.3</jacoco-maven-plugin.version>
   </properties>
 
   <dependencies>
@@ -82,7 +84,7 @@
     <dependency>
       <groupId>org.scala-lang</groupId>
       <artifactId>scala-library</artifactId>
-      <version>2.12.4</version>
+      <version>${scala.version}</version>
       <scope>provided</scope>
     </dependency>
 
@@ -104,14 +106,14 @@
     <dependency>
       <groupId>org.awaitility</groupId>
       <artifactId>awaitility-scala</artifactId>
-      <version>3.0.0</version>
+      <version>3.1.6</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.scalatest</groupId>
       <artifactId>scalatest_2.12</artifactId>
-      <version>3.0.4</version>
+      <version>3.0.7</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -121,7 +123,7 @@
       <plugin>
         <groupId>net.alchim31.maven</groupId>
         <artifactId>scala-maven-plugin</artifactId>
-        <version>3.3.1</version>
+        <version>4.0.1</version>
         <executions>
           <execution>
             <goals>
@@ -198,7 +200,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.20.1</version>
+        <version>2.22.1</version>
         <configuration>
           <skipTests>true</skipTests>
         </configuration>
@@ -207,7 +209,7 @@
       <plugin>
         <groupId>org.scalatest</groupId>
         <artifactId>scalatest-maven-plugin</artifactId>
-        <version>1.0</version>
+        <version>2.0.0</version>
         <configuration>
           <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
         </configuration>
@@ -279,7 +281,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>3.0.0</version>
+            <version>3.1.0</version>
             <configuration>
               <failOnError>false</failOnError>
             </configuration>
